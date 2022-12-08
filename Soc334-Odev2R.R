@@ -10,6 +10,7 @@ summary(edusavings)
 
 sd(edusavings$Education.expenditure.Percent.of.GNI.2019)
 sd(edusavings$Unemployment.with.advanced.education.Percent.of.total.labor.force.2019)
+cor(edusavings$Unemployment.with.advanced.education.Percent.of.total.labor.force.2019, edusavings$Education.expenditure.Percent.of.GNI.2019)
 
 hist(edusavings$Education.expenditure.Percent.of.GNI.2019)
 hist(edusavings$Unemployment.with.advanced.education.Percent.of.total.labor.force.2019)
