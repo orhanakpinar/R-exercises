@@ -1,5 +1,6 @@
+#install.packages("knitr", repos = "http://cran.us.r-project.org")
 library(knitr)
-install.packages('ggplot2', repos = "http://cran.us.r-project.org")
+# install.packages('ggplot2', repos = "http://cran.us.r-project.org")
 library(ggplot2)
 
 
