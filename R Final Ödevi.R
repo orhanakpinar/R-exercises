@@ -9,7 +9,7 @@
 library(ggplot2)
 #import edusavings.tsv
 
-#Final Ödevi 1 Soru 1b
+#Final Ödevi 1 Soru 1a
 m <- ggplot(data.frame(x = c(47.5, 152.5)), aes(x)) +
   stat_function(fun = dnorm,geom = "line", size=1, args = list(mean = 100,sd = 15), xlim = c(47.5, 145)) +
   geom_area(fun = dnorm,
