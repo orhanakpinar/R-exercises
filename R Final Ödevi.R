@@ -7,6 +7,7 @@
 # geom_...(..., stat="") = stat_...(..., geom ="")
 
 library(ggplot2)
+#import edusavings.tsv
 
 #Final Ödevi 1 Soru 1b
 m <- ggplot(data.frame(x = c(47.5, 152.5)), aes(x)) +
