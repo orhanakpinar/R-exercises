@@ -107,8 +107,8 @@ p
 # Görsel ayrıma dayanarak 2 parçalı Doğrusal olmayan Regresyon
 
 
-edus_highregime <- subset(edusavings, edusavings$Education.expenditure.Percent.of.GNI.2019 >= 4.6)
-edus_lowregime <- subset(edusavings, edusavings$Education.expenditure.Percent.of.GNI.2019 <= 4.6)
+edus_highregime <- subset(edusavings, edusavings$Education.expenditure.Percent.of.GNI.2019 >= 4.53)
+edus_lowregime <- subset(edusavings, edusavings$Education.expenditure.Percent.of.GNI.2019 <= 4.53)
 eduPlot <- ggplot(edusavings,aes(x=Education.expenditure.Percent.of.GNI.2019,y=Unemployment.with.advanced.education.Percent.of.total.labor.force.2019))+
   geom_point()+
   geom_smooth(data=edus_highregime, method = "lm")+
