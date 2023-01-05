@@ -1,7 +1,7 @@
 #Soc 334Final
 #Normal Dağılım grafiği
 #pnorrm(x, mean=, sd=) = CDF
-#dnorm = height of PDF
+#dnorm = height of PDF, density
 #rnorm() = random Normal generator
 #qnorm(%) = CDF score to (z) score
 # geom_...(..., stat="") = stat_...(..., geom ="")
@@ -99,10 +99,11 @@ p <- ggplot(data.frame(x = c(41.5, 249.5)), aes(x)) +
   geom_vline(xintercept=140, linetype="dashed", color = "red", size=1.5) +
   geom_segment(mapping= aes(x = 211, y = 0, xend = 211, yend = 0.0008), linetype="dashed", color = "red", size=1.5 )
       
+p
 
 #Final Ödevi 3
 
-# Gözle ayırıma dayanarak 2 parçalı Doğrusal olmayan Regresyon
+# Görsel ayrıma dayanarak 2 parçalı Doğrusal olmayan Regresyon
 
 
 edus_highregime <- subset(edusavings, edusavings$Education.expenditure.Percent.of.GNI.2019 >= 4.8)
