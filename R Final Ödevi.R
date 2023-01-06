@@ -124,3 +124,12 @@ eduPlot <- ggplot(edusavings,aes(x=Education.expenditure.Percent.of.GNI.2019,y=U
 
 eduPlot
 
+#Polynomial yöntemiyle doğrusal olmayan regresyon
+
+eduPlot <- ggplot(edusavings,mapping = aes(x= Education.expenditure.Percent.of.GNI.2019, y=Unemployment.with.advanced.education.Percent.of.total.labor.force.2019)) + 
+  geom_point() +
+  stat_smooth(method="lm", formula = y ~ poly(x,2), linewidth = 1) + 
+  xlab("Education.expenditure.Percent.of.GNI.2019") +
+  ylab("Unemployment.with.advanced.education.Percent.of.total.labor.force.2019")
+
+eduPlot
