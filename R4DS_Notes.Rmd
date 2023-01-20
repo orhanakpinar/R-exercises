@@ -436,6 +436,18 @@ delays <- not_cancelled %>%
 ggplot(data = delays, mapping = aes(x = delay)) + 
   geom_freqpoly(binwidth = 10)
 ```
+now with counts
+```{r}
+delays <- not_cancelled %>% 
+  group_by(tailnum) %>% 
+  summarise(
+    delay = mean(arr_delay, na.rm = TRUE),
+    n = n()
+  )
+
+ggplot(data = delays, mapping = aes(x = delay, y = n)) + 
+  geom_point(alpha = 1/10)
+```
 
 RStudio tip: a useful keyboard shortcut is Cmd/Ctrl + Shift + P. This resends the previously sent chunk from the editor to the console.
 
