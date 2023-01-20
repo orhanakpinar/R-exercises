@@ -1,0 +1,442 @@
+---
+title: "R4DS_Notes"
+author: "Orhan"
+date: "2023-01-11"
+output: html_document
+---
+
+some notes, some comments, some samples
+
+source: <https://r4ds.had.co.nz/>
+
+## R4DS Notes
+
+#an object is a function or data #packagename::packageobject()
+
+dput() edusavings \<- dput("edusavings.tsv")
+
+```{r}
+library(tidyverse)
+```
+
+##### #Run the scatter plot
+
+```{r}
+ggplot(data = mpg) + geom_point(mapping = (aes(x=displ, y=hwy)))
+```
+
+#map class variable with color aes
+
+```{r}
+ggplot(data=mpg, aes(x=displ, y=hwy, color=class)) + 
+  geom_point() +
+  geom_smooth(method = lm)
+```
+
+#change map color to size aes, will bug because it's an unordered variable
+
+```{r}
+ggplot(data =mpg) + geom_point(mapping = aes(x=displ, y=hwy, size = class), position = "jitter")
+```
+
+#additionally, alpha, transparency
+
+```{r}
+ggplot(data =mpg) + geom_point(mapping = aes(x=displ, y=hwy, alpha = class))
+```
+
+#and shape, shapes has 6 shape max, changing parameter manually
+
+```{r}
+ggplot(data =mpg) + geom_point(mapping = aes(x=displ, y=hwy, shape = class)) +
+  scale_shape_manual(values = 0:7)
+```
+
+#make all points blue, no variation
+
+```{r}
+ggplot(data = mpg) + geom_point(mapping = aes(x=displ, y=hwy), color="blue")
+```
+
+#manual changes goes beyond aes() argument taking values of color=string, point=mm, shape=numbers
+
+?geom_point \# For shapes that have a border (like 21), you can color the inside and outside separately. Use the stroke aesthetic to modify the width of the border
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(shape = 21, colour = "black", fill = "blue", size = 3, stroke = 2)
+```
+
+#facets fro discrete variables
+
+```{r}
+ggplot(data=mpg) + geom_point(mapping = aes(x=displ, y=hwy)) + facet_wrap(~ class, nrow =2)
+```
+
+#facets with combination of two
+
+```{r}
+ggplot(data=mpg) + geom_point(mapping = aes(x = displ, y = hwy)) + facet_grid(drv ~ cyl)
+```
+
+#and you can use dot as variable facet_grid(. \~ cyl) or (drv \~ .)
+
+```{r}
+ggplot(data=mpg) + geom_point(mapping = aes(x = displ, y = hwy)) + facet_grid(. ~ cyl)
+```
+
+?
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+
+#These duplication can be avoided by incorporating a global argument
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth()
+```
+
+#for bar chart geom_bar() #You can learn which stat a geom uses by inspecting the default value for the stat argument. For example, ?geom_bar shows that the default value for stat is "count", which means that geom_bar() uses stat_count(). You can generally use geoms and stats interchangeably. For example, you can recreate the previous plot using stat_count() instead of geom_bar(). This works because every geom has a default stat; and every stat has a default geom. ggplot2 provides over 20 stats for you to use, try the ggplot2 cheatsheet. ?stat_summary() ?stat_bin() ?geom_col()
+
+#Note what happens if you map the fill aesthetic to another variable, like clarity: the bars are automatically stacked. Each colored rectangle represents a combination of cut and clarity
+
+```{r}
+ggplot (diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = cut)) 
+```
+
+#see what happens when color = cut,
+
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, fill = clarity))
+```
+
+#The stacking is performed automatically by the position adjustment specified by the position argument. If you don't want a stacked bar chart, you can use one of three other options: "identity", "dodge" or "fill". position = "fill" works like stacking, but makes each set of stacked bars the same height. This makes it easier to compare proportions across groups.
+
+#now the bars have same height!!!
+
+```{r}
+ggplot (data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
+```
+
+#now we have comparable histogram sets!!!
+
+```{r}
+ggplot (data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+```
+
+#Overplotting, makes hard to see where the mass is. So we adjust in scatter-plot by adding noise to represent same values. In large scales it makes data more accurate.
+
+```{r}
+ggplot (data = mpg) + 
+  geom_point (mapping = aes(x = displ, y = hwy), position = "jitter")
+```
+
+#Because this is such a useful operation, ggplot2 comes with a shorthand for geom_point(position = "jitter"): geom_jitter(). To learn more about a position adjustment, look up the help page associated with each adjustment: ?position_dodge, ?position_fill, ?position_identity, ?position_jitter, and ?position_stack
+
+#bir de flipped boxplot yapalım
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) + 
+  geom_boxplot(color="blue", fill="red") +
+  coord_flip()
+```
+
+#bu da polar
+
+```{r}
+ggplot (data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity))+
+  coord_polar()
+```
+
+#coord_flip() switches the x and y axes. ggplot + coord_flip #coord_quickmap() sets the aspect ratio correctly for maps. Won't be mentioned in the book #coord_polar() uses polar coordinates. PIE CHART!! is circle bars... ?coord_fixed() \# ensures that the ranges of axes are equal to the specified ratio by #coord_quickmap() and coord_map()? ?coord_sf()
+
+## 4- WORKFLOW
+
+(p \<-ggplot() ... ) parentheses make print to screen happen directly #shortcuts Alt + Shift + K
+
+## 5- DATA TRANSFORMATION
+
+tidyverse and deplyr set, ?tibble
+
+#types: int , chr(str) , dbl , dttm , lgl(bool) , fctr , date
+
+#### 5 important dplyr functions
+
+```{r}
+library("nycflights13")
+library("dplyr")
+library("tidyverse")
+
+```
+
+##### **Select** by filter
+
+flights from Jan 1st
+
+```{r}
+filter(flights, month ==1, day == 1) 
+```
+
+#create a group by the condition
+
+```{r}
+Jan1 <- filter(flights, month == 1, day ==1) 
+Jan1
+```
+
+#Add some knowledge from before
+
+```{r}
+Jan1plot <- ggplot (data = flights, aes(x = dep_time, y =arr_time)) + 
+   geom_point(mapping = aes(color = carrier)) + 
+   facet_grid(carrier ~ .)
+Jan1plot
+```
+
+(dec25 \<- filter(flights, month == 12, day == 25))
+
+#Comparisons can be made with mathematical operators such as \<= , == . Logical operators are & for and , \| for or , ! for not.
+
+However to see of a flight is either 11th or 12th months, (11 \| 12) is wrong. One must use %in% for this operation.
+
+```{r}
+nov_dec <- filter(flights, month %in% c(11, 12))
+nov_dec
+```
+
+You can use De Morgan's laws such as !(x & y) for !x \| !y As well as `&` and `|`, R also has `&&` and `||`. Don't use them here! They'll be in conditional execution.
+
+NA is unknown value.
+
+is.na(x) checks whether a value is missing.
+
+filter excludes NA and False values.
+
+##### Arrange()
+
+`arrange()` works similarly to `filter()` except that instead of selecting rows, it changes their order.
+
+```{r}
+arrange(flights, month, year, day)
+```
+
+Use `desc()` to re-order by a column in descending order: Missing values are always sorted at the end:
+
+How could you use `arrange()` to sort all missing values to the start? (Hint: use `is.na()`).
+
+```{r}
+arrange(flights, desc(dep_delay))
+```
+
+##### 
+
+`select()`
+
+allows you to rapidly zoom in on a useful subset. Select columns
+
+```{r}
+select(flights, year, month, day)
+```
+
+select from column to column
+
+```{r}
+select(flights, year:day)
+```
+
+select except those between columns
+
+```{r}
+select(flights, -(year:day))
+```
+
+There are a number of helper functions you can use within `select()` See
+
+```{r}
+ ?select
+```
+
+for more details.
+
+`select()` can be used to rename variables, but it's rarely useful because it drops all of the variables not explicitly mentioned. Instead, use `rename()`
+
+```{r}
+rename(flights, tail_num = tailnum)
+```
+
+Another option is to use `select()` in conjunction with the `everything()` helper. This is useful if you have a handful of variables you'd like to move to the start of the data frame.
+
+```{r}
+select(flights, time_hour, air_time, everything())
+```
+
+##### 
+
+`mutate()` Add New variables
+
+always adds new columns at the end of your dataset. Let's start simple when you're in RStudio, the easiest way to see all the columns is `View()` ?
+
+```{r}
+flights_sml <- select(flights, 
+  year:day, 
+  ends_with("delay"), 
+  distance, 
+  air_time
+)
+flights_sml
+```
+
+```{r}
+mutate(flights_sml,
+       gain = dep_delay - arr_delay,
+       speed = distance / air_time*60)
+```
+
+Note that you can refer to columns that you've just created: The code below won't work, because mutated columns exists only when it's called now or attributed to a new variable.
+
+```{r}
+mutate(flights_sml,
+       gain_per_hour = gain / hours)
+```
+
+If you only want to keep the new variables, use `transmute()`
+
+```{r}
+transmute(flights_sml,
+         gain = dep_delay - arr_delay,
+         hours = air_time / 60,
+         gain_per_hour = gain / hours)
+```
+
+##### Creation Functions
+
+There are many functions for creating new variables that you can use with mutate() List is very long.
+
+One important fact is that, all functions must be vectorised.
+
+-   Arithmetic operators are vectorised. Modular arithmetics can be used. %/%, %%
+
+-   Aggregate functions can be used: x/sum(x) , y - mean(y) Logs , log(), log2(), log10()
+
+-   Offsets: `lead()` and `lag()` allow you to refer to leading or lagging values. This allows you to compute running differences (e.g. `x - lag(x)`) or find when values change (`x != lag(x)`). They are most useful in conjunction with `group_by().`
+
+-   Cumulative and rolling aggregates: R provides functions for running sums, products, mins and maxes: `cumsum()`, `cumprod()`, `cummin()`, `cummax()`; and dplyr provides `cummean()` for cumulative means.
+
+-   Logical operators
+
+-   Ranking: there are a number of ranking functions, but you should start with `min_rank()`, and the variants `row_number()`, `dense_rank()`, `percent_rank()`, `cume_dist()`, `ntile()`
+
+##### Summarise()
+
+`summarise()` collapses a data frame to a single row:
+
+```{r}
+summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
+```
+
+summarise() is not terribly useful unless we pair it with `group_by()` This changes the unit of analysis from the complete dataset to individual groups. aka most commonly when working with dplyr: grouped summaries
+
+```{r}
+by_day <- group_by(flights, year, month, day)
+summarise(by_day, delay = mean(dep_delay, na.rm = TRUE))
+```
+
+##### The Pipe %\>%
+
+Explore the relationship between the distance and average delay for each location
+
+```{r warning=TRUE}
+by_dest <- group_by(flights, dest)
+delay <- summarise(by_dest,
+  count = n(),
+  dist = mean(distance, na.rm = TRUE),
+  delay = mean(arr_delay, na.rm = TRUE)
+)
+delay <- filter(delay, count > 20, dest != "HNL")
+
+# It looks like delays increase with distance up to ~750 miles 
+# and then decrease. Maybe as flights get longer there's more 
+# ability to make up delays in the air?
+ggplot(data = delay, mapping = aes(x = dist, y = delay)) +
+  geom_point(aes(size = count), alpha = 1/3) +
+  geom_smooth(se = FALSE)
+#> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'  
+```
+
+There are three steps to prepare this data:
+
+1.  Group flights by destination.
+
+2.  Summarise to compute distance, average delay, and number of flights.
+
+3.  Filter to remove noisy points and Honolulu airport, which is almost twice as far away as the next closest airport.
+
+This code is a little frustrating to write because we have to give each intermediate data frame a name, even though we don't care about it. Naming things is hard, so this slows down our analysis.
+
+There's another way to tackle the same problem with the pipe, %\>%
+
+```{r}
+delays <- flights %>% 
+  group_by(dest) %>% 
+  summarise(
+    count = n(),
+    dist = mean(distance, na.rm = TRUE),
+    delay = mean(arr_delay, na.rm = TRUE)
+  ) %>% 
+  filter(count > 20, dest != "HNL")
+#now plot
+ggplot(data = delays, mapping = aes(x = dist, y = delay)) +
+  geom_point(aes(size = count), alpha = 1/3) +
+  geom_smooth(se = FALSE)
+```
+
+This focuses on the transformations, not what's being transformed, which makes the code easier to read. You can read it as a series of imperative statements: group, then summarise, then filter. As suggested by this reading, a good way to pronounce `%>%` when reading code is "then".
+
+Behind the scenes, `x %>% f(y)` turns into `f(x, y)`, and `x %>% f(y) %>% g(z)` turns into `g(f(x, y), z)` and so on. We'll use piping frequently from now on because it considerably improves the readability of code, and we'll come back to it in more detail in pipes.
+
+The only exception is ggplot2: it was written before the pipe was discovered. Unfortunately, the next iteration of ggplot2, ggvis, which does use the pipe, isn't quite ready for prime time yet.
+
+###### Missing Values
+
+That na.rm argument is for that. Don't set it and you'll get NA values, so we use that to remove them from computation. Any NA input will cause the output become NA.
+
+We could also tackle the problem by first removing the cancelled flights.
+
+```{r}
+not_cancelled <- flights %>% 
+  filter(!is.na(dep_delay), !is.na(arr_delay))
+
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  summarise(mean = mean(dep_delay))
+```
+
+###### Count n()
+
+Whenever you do any aggregation, it's always a good idea to include either a count (`n()`), or a count of non-missing values (`sum(!is.na(x))`).
+
+```{r}
+#planes (identified by their tail number) that have the highest average delays:
+delays <- not_cancelled %>% 
+  group_by(tailnum) %>% 
+  summarise(
+    delay = mean(arr_delay)
+  )
+
+ggplot(data = delays, mapping = aes(x = delay)) + 
+  geom_freqpoly(binwidth = 10)
+```
+
+RStudio tip: a useful keyboard shortcut is Cmd/Ctrl + Shift + P. This resends the previously sent chunk from the editor to the console.
+
+##### Useful Summary Functions
