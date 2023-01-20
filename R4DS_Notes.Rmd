@@ -448,7 +448,14 @@ delays <- not_cancelled %>%
 ggplot(data = delays, mapping = aes(x = delay, y = n)) + 
   geom_point(alpha = 1/10)
 ```
+Now we filter low counts and pipe it
 
+```{r}
+delays %>% 
+  filter(n > 25) %>% 
+  ggplot(mapping = aes(x = delay, y = n)) + 
+    geom_point(alpha = 1/10)
+```
 RStudio tip: a useful keyboard shortcut is Cmd/Ctrl + Shift + P. This resends the previously sent chunk from the editor to the console.
 
 ##### Useful Summary Functions
