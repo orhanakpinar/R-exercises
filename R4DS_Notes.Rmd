@@ -459,3 +459,22 @@ delays %>%
 RStudio tip: a useful keyboard shortcut is Cmd/Ctrl + Shift + P. This resends the previously sent chunk from the editor to the console.
 
 ##### Useful Summary Functions
+the average positive delay, because median absolute deviation mad(x) is a robust metric for ignoring outliers.
+
+```{r}
+not_cancelled %>%
+  group_by(year, month, day) %>%
+  summarise(
+    avg_delay1 = mean(arr_delay),
+    avg_delay2 = mean(arr_delay[arr_delay>0])
+  )
+```
+
+IQR is interquantile range. Also a useful equivalent for finding a range. Standard deviation is a standard sd() For example, quantile(x, 0.25) will find a value of x that is greater than 25% of the values, and less than the remaining 75%. So forth 
+Measures of position: first(x), nth(x, 2), last(x). These work similarly to x[1], x[2], and x[length(x)] but let you set a default value if that position does not exist (i.e. you're trying to get the 3rd element from a group that only has two elements) 
+n() takes no arguments, and returns the size of the current group. To count the number of non-missing values, use sum(!is.na(x)). dplyr provides also count() function for simplicity You can optionally provide a weight variable. For example, you could use this to "count" (sum) the total number of miles a plane flew:
+
+```{r}
+not_cancelled %>% 
+  count(tailnum, wt = distance)
+```
