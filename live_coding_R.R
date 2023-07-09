@@ -4,4 +4,10 @@
 #normally I re-edit mistaken codes a lot, this would be a good exercise as well.
 #First commit on github.com, checking R studio. On live soon
 #plus this is useful for code documentation in general
-#also as a coding diary
+#also as a coding diary; for dana analysis with R
+
+#can't set yet, I will make an xy plane by random triangles 
+#limits = 100 for x & y, first create samples,
+#then combinde 3 by 3 for grouping,
+#then create another 2 randon sample with 3 additional features. Then visualize
+
