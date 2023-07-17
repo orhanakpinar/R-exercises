@@ -15,6 +15,9 @@ library(scales)
 #and sometimes I coded too verbose
 #I yet to learn dplyr, tidying went messy
 
+#I was going to tidy everything before uploading this 
+#then I decided to edit on the go
+#I will link dataset and final thesis in 2 days 
 
 
 #Extract functions
