@@ -11,3 +11,5 @@
 #then combinde 3 by 3 for grouping,
 #then create another 2 randon sample with 3 additional features. Then visualize
 
+#I still couldn't figured it out, having problems about my administrator.
+#I also might need to arrange some windows system files.
