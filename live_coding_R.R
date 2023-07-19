@@ -15,3 +15,12 @@
 #I also might need to arrange some windows system files.
 #is this the first commit? 
 #is this the first commit? 
+
+library(tidyverse)
+
+a <-(1:100)
+b <- sample(1000, 100, replace=T)
+
+ab <- tibble(a,b)
+
+#it's working
