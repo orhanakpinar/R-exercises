@@ -24,3 +24,14 @@ b <- sample(1000, 100, replace=T)
 ab <- tibble(a,b)
 
 #it's working
+
+#let's create a deck of cards
+
+cardsuit <-  rep(c("spades", "clubs", "hearts", "diamonds"), each=13)
+cardlabel <- rep(c("ace", (2:10), "jack", "queen", "king"), times=4)
+cardcolor <- rep(c("black", "red"), each=26)
+
+carddeck <- tibble(cardsuit, cardlabel, cardcolor) 
+
+view(carddeck)
+#ready to play...
