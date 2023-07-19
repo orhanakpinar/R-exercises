@@ -13,5 +13,5 @@
 
 #I still couldn't figured it out, having problems about my administrator.
 #I also might need to arrange some windows system files.
-#is this first commit? 
-#is this first commit? 
+#is this the first commit? 
+#is this the first commit? 
