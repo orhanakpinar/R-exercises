@@ -1,0 +1,18 @@
+[33mcommit 5b0fe4c0157aa7fe49ca00274da9173d830cc4d5[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: orhanakpinar <orhan.akpinar1@gmail.com>
+Date:   Wed Jul 19 18:53:18 2023 +0300
+
+    First edit from my local computer
+
+[1mdiff --git a/live_coding_R.R b/live_coding_R.R[m
+[1mindex faafb45..8526623 100644[m
+[1m--- a/live_coding_R.R[m
+[1m+++ b/live_coding_R.R[m
+[36m@@ -13,5 +13,5 @@[m
+ [m
+ #I still couldn't figured it out, having problems about my administrator.[m
+ #I also might need to arrange some windows system files.[m
+[31m-#is this first commit? [m
+[31m-#is this first commit? [m
+[32m+[m[32m#is this the first commit?[m[41m [m
+[32m+[m[32m#is this the first commit?[m[41m [m
