@@ -454,4 +454,29 @@ worker_PC_Sim <- data.frame(Auteur000Date = worker_PC_list$Auteur_Date, Type_Éc
   grid.table(worker_PC_Sim)
   dev.off()
 
-  
+#Graphics
+
+##Worker_PM Bar Plot PSQI_M vs Group Size
+worker_PM_Bar <- ggplot(worker_PM_list, aes(x = reorder(study_group, PSQI_Mean), y = PSQI_Mean)) +
+  geom_bar(stat='identity', position=position_dodge(0.1), linewidth =0.05, color ="black", fill="gray") + 
+  geom_errorbar(aes(ymin=ifelse((PSQI_Mean - PSQI_SD)>0,(PSQI_Mean - PSQI_SD),0), ymax=(PSQI_Mean + PSQI_SD)))+
+  scale_y_continuous(limits = c(0, 12), breaks = seq(0, 10, by = 0.5), labels=gsub("\\.", ",", seq(0,10, by=.5)))+
+  geom_hline(yintercept = 5, linewidth=1.5, linetype = "dashed")+
+  xlab("Type d'Échantillon") +
+  ylab("PSQI Valeur Moyenne") +
+  theme_bw(base_size = 28)+
+  coord_flip()
+
+print(worker_PM_Bar)
+
+##worker_PC Bad Sleep Ratio 
+
+worker_PC_Hist <- ggplot(worker_PC_list, aes(y=reorder(study_group,psqicut_Badratio), x=psqicut_Badratio)) +
+  geom_bar(stat="identity", position ="dodge",color ="black", fill="gray") + 
+  scale_x_continuous(limits = c(0, 1), breaks = seq(0, 1, by = 0.1),labels=gsub("\\.", ",", seq(0,1, by=.1)))+ 
+  #geom_text_repel(aes(label = group_size), size=6, max.overlaps = Inf,show.legend = FALSE)+ 
+  theme_bw(base_size = 28)+ 
+  xlab("PSQI >5 Ratio") +
+  ylab("Type d'Échantillon") 
+
+print(worker_PC_Hist)
