@@ -480,3 +480,70 @@ worker_PC_Hist <- ggplot(worker_PC_list, aes(y=reorder(study_group,psqicut_Badra
   ylab("Type d'Échantillon") 
 
 print(worker_PC_Hist)
+
+
+##Shiftworker Graphs
+
+###Reorganize data for subgrouped forest plot
+
+shiftworkyes_PMdata <- shiftworker_PM_list[, c("Auteur_Date", "study_group", "City", "Age_Moyen.Ecart","group_size", "PSQI_Mean", "PSQI_SD", "shiftyes_psqimean", "shiftyes_psqi_sd", "lower_shiftyeslimit", "upper_shiftyeslimit", "Women_Ratio", "shiftworkyes_ratio")]
+shiftworkno_PMdata <- shiftworker_PM_list[, c("Auteur_Date", "study_group", "City", "Age_Moyen.Ecart","group_size","PSQI_Mean", "PSQI_SD", "shiftno_psqimean", "shiftno_psqi_sd", "lower_shiftnolimit", "upper_shiftnolimit", "Women_Ratio", "shiftworkyes_ratio")]
+shiftworkyes_PMdata$group <- "Shiftwork_Yes"
+shiftworkno_PMdata$group <- "Shiftwork_No" 
+
+colnames(shiftworkyes_PMdata) <- c("Auteur_Date", "study_group", "City", "Age_Moyen.Ecart","group_size","PSQI_Mean", "PSQI_SD", "shiftworker_psqimean", "shiftworker_psqi_sd", "lower", "upper", "Women_Ratio", "shiftworkyes_ratio","Work_Group")
+colnames(shiftworkno_PMdata) <- c("Auteur_Date", "study_group", "City", "Age_Moyen.Ecart","group_size","PSQI_Mean", "PSQI_SD", "shiftworker_psqimean", "shiftworker_psqi_sd", "lower", "upper", "Women_Ratio", "shiftworkyes_ratio","Work_Group")
+combined_shift_PM <- rbind(shiftworkyes_PMdata, shiftworkno_PMdata)
+
+grouped_shift_PM <- combined_shift_PM %>% group_by(Work_Group)
+
+
+##Forest plot with Shift Yes-No subgroups
+shiftworker_PM_forest <- forestplot(grouped_shift_PM,
+                                    legend = c("Travailleur Posté", "Travailleur Non-Posté"),
+                                    labeltext = c(Auteur_Date, study_group, Age_Moyen.Ecart, group_size),
+                                    boxsize = 0.2,
+                                    vertices = TRUE,
+                                    shapes_gp = fpShapesGp(default = gpar(lwd = 1.5)),
+                                    mean = shiftworker_psqimean,
+                                    ci.lb = grouped_shift_PM$lower, 
+                                    ci.ub = grouped_shift_PM$upper,
+                                    xlab = "PSQI Valeur Moyenne",
+                                    colgap = unit(8,"mm"),
+                                    grid = structure(c(5),
+                                                     gp = gpar(col = "steelblue", lty = 2)
+                                    ),
+                                    line.margin = .1,
+                                    is.summary = c(F))|> 
+  fp_add_header(Auteur_Date = c("", "Auteur-Date"),
+                study_group = c("", "Type\nd'Échantillon"),
+                Age_Moyen.Ecart = c("", "Âge\nMoyen-Écart"),
+                group_size = c("", "Taille\nd'Échantillon"))|> 
+  fp_set_style(txt_gp= fpTxtGp(summary=gpar(cex=1), legend = gpar(cex=1.2)) ,box = c("gray", "black"))|> 
+  fp_set_zebra_style("#EFEFEF")
+print(shiftworker_PM_forest)
+ggsave("0shiftworker_PM_forest.png", width = 40, height = 25, units = "cm", plot = last_plot(), dpi = 820)
+
+
+
+##Group Shiftwork_PC same for dodged bar chart.
+
+shiftworker_PC_histList <- shiftworker_PC_list %>%
+  select(study_group, shiftno_psqicutBadRatio, shiftyes_psqicutBadRatio) %>%
+  tidyr::gather(type, psqicutbadratio, -study_group)
+shiftworker_PC_histList <- mutate_all(shiftworker_PC_histList, ~replace_na(.,0))
+
+##Histogram of Shiftwork PSQI-Cut Yes/No Groups by ratio
+shiftworker_PC_Hist<- ggplot(shiftworker_PC_histList, aes(x = study_group, y = psqicutbadratio, group = type, fill = type)) + 
+  scale_x_discrete(drop=F)+
+  scale_fill_grey(name = "Temps de Travail:", labels=c(' Travailleurs Non Postés', 'Travailleurs Postés'))+
+  geom_bar(stat = 'identity', position = 'dodge', color="black") +  
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, by = 0.1))+ 
+  xlab("Type d'Échantillon") + ylab("PSQI >5 Ratio")+
+  theme_bw(base_size=24) +
+  theme(legend.spacing = unit(5, 'cm'),legend.position="top" )
+  
+
+print(shiftworker_PC_Hist)
+ggsave("00shiftworker_PC_Hist.png", width = 45, height = 20, units = "cm", plot = last_plot(), dpi = 820)
+
