@@ -1,3 +1,8 @@
+# Final version of my thesis is here: https://www.academia.edu/105451701/Analyse_Des_Facteurs_Sociaux_Influençant_La_Qualité_Du_Sommeil
+# I couldn't add all source code yet because of the duties about my transition to master's
+# Recently I've been practicing DS with Python so, excuses.
+
+
 library(tidyverse)
 library (readxl)
 library(tibble)
@@ -11,13 +16,10 @@ library(ggthemes)
 library(scales)
 
 #This code is not optimal, I learned along the way
-#I sometimes used old versions or alteratives, 
+#I sometimes used old versions or alternatives, 
 #and sometimes I coded too verbose
 #I yet to learn dplyr, tidying went messy
 
-#I was going to tidy everything before uploading this 
-#then I decided to edit on the go
-#I will link dataset and final thesis in 2 days 
 
 
 #Extract functions
