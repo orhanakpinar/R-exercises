@@ -1,6 +1,7 @@
 # Final version of my thesis is here: https://www.academia.edu/105451701/Analyse_Des_Facteurs_Sociaux_Influençant_La_Qualité_Du_Sommeil
 # I couldn't add all source code yet because of the duties about my transition to master's
 # Recently I've been practicing DS with Python so, excuses.
+# Important update related to new code of conduct, ChatGPT 3.5 is used in this study. Logs can be provided.
 
 
 library(tidyverse)
