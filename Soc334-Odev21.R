@@ -1,3 +1,5 @@
+#In the assignments, ChatGPT 3.5 is used for structuring, refining and permutating the codes. Logs can be provided.
+
 #install.packages("knitr", repos = "http://cran.us.r-project.org")
 library(knitr)
 # install.packages('ggplot2', repos = "http://cran.us.r-project.org")
