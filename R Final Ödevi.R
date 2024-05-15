@@ -1,4 +1,5 @@
-#In the assignments, ChatGPT 3.5 is used for structuring, refining and permutating the codes. Logs can be provided.
+#Updating the traditional code of conduct for academic work, about the use of artificial intelligence.
+#In the assignments, ChatGPT 3.5 is used for structuring, refining, and permutating the codes. Logs can be provided.
 #Soc 334Final
 #Normal Dağılım grafiği
 #pnorrm(x, mean=, sd=) = CDF
